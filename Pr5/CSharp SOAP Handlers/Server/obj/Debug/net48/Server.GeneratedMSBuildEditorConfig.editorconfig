@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = Server
+build_property.ProjectDir = C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Server\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 

@@ -1,0 +1,20 @@
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Server\bin\Debug\net48\Server.exe.config
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Server\bin\Debug\net48\Server.exe
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Server\bin\Debug\net48\Server.pdb
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Server\obj\Debug\net48\Server.csproj.AssemblyReference.cache
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Server\obj\Debug\net48\Server.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Server\obj\Debug\net48\Server.AssemblyInfoInputs.cache
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Server\obj\Debug\net48\Server.AssemblyInfo.cs
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Server\obj\Debug\net48\Server.csproj.CoreCompileInputs.cache
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Server\obj\Debug\net48\Server.exe
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Server\obj\Debug\net48\Server.pdb
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Server\bin\Debug\net48\Server.exe.config
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Server\bin\Debug\net48\Server.exe
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Server\bin\Debug\net48\Server.pdb
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Server\obj\Debug\net48\Server.csproj.AssemblyReference.cache
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Server\obj\Debug\net48\Server.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Server\obj\Debug\net48\Server.AssemblyInfoInputs.cache
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Server\obj\Debug\net48\Server.AssemblyInfo.cs
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Server\obj\Debug\net48\Server.csproj.CoreCompileInputs.cache
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Server\obj\Debug\net48\Server.exe
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Server\obj\Debug\net48\Server.pdb

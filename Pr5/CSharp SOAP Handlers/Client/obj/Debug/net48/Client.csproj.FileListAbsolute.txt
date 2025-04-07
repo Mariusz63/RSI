@@ -1,0 +1,20 @@
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Client\bin\Debug\net48\Client.exe.config
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Client\bin\Debug\net48\Client.exe
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Client\bin\Debug\net48\Client.pdb
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Client\obj\Debug\net48\Client.csproj.AssemblyReference.cache
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Client\obj\Debug\net48\Client.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Client\obj\Debug\net48\Client.AssemblyInfoInputs.cache
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Client\obj\Debug\net48\Client.AssemblyInfo.cs
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Client\obj\Debug\net48\Client.csproj.CoreCompileInputs.cache
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Client\obj\Debug\net48\Client.exe
+C:\Users\MichalNiedzwiecki\IdeaProjects\RozproszoneSystemyInformatyczne\Pracownia5\C#Handlers\Client\obj\Debug\net48\Client.pdb
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Client\bin\Debug\net48\Client.exe.config
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Client\bin\Debug\net48\Client.exe
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Client\bin\Debug\net48\Client.pdb
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Client\obj\Debug\net48\Client.csproj.AssemblyReference.cache
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Client\obj\Debug\net48\Client.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Client\obj\Debug\net48\Client.AssemblyInfoInputs.cache
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Client\obj\Debug\net48\Client.AssemblyInfo.cs
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Client\obj\Debug\net48\Client.csproj.CoreCompileInputs.cache
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Client\obj\Debug\net48\Client.exe
+C:\Users\mariu\Desktop\RSI\Pr5\CSharp SOAP Handlers\Client\obj\Debug\net48\Client.pdb

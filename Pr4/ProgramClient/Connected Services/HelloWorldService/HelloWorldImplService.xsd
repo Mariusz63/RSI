@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://helloworld.org.rsi/" targetNamespace="http://helloworld.org.rsi/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="getHelloWorldAsString" type="tns:getHelloWorldAsString" />
+  <xs:element name="getHelloWorldAsStringResponse" type="tns:getHelloWorldAsStringResponse" />
+  <xs:element name="getProducts" type="tns:getProducts" />
+  <xs:element name="getProductsResponse" type="tns:getProductsResponse" />
+  <xs:complexType name="getHelloWorldAsString">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getHelloWorldAsStringResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getProducts">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getProductsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:product" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="product">
+    <xs:sequence>
+      <xs:element name="cena" type="xs:int" />
+      <xs:element minOccurs="0" name="nazwa" type="xs:string" />
+      <xs:element minOccurs="0" name="opis" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

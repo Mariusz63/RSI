@@ -1,0 +1,68 @@
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files for Visual Studio for Mac
+.vscode/
+.idea/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Installer Files
+Thumbs.db
+ehthumbs.db
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Dd]istro/
+[Dd]eploy/
+[Dd]ebug/Build/
+[Dd]ebug/Release/
+
+# Uncomment if you have tasks that create project's static files
+#wwwroot/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Installer Files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# .NET Core build results
+bin/
+obj/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# User-specific files
+.vs/
+.idea/
+.vscode/
+
+# Azure Web Apps
+.vs2019/
+
+# Visual Studio for Mac
+.vscode/
+.idea/
+
+# Rider IDE
+.idea/

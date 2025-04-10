@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.ServiceModel;
-using System.ServiceModel.Description;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Server
 {
@@ -12,22 +8,14 @@ namespace Server
     {
         static void Main(string[] args)
         {
-            Uri baseAddress = new Uri("http://localhost:8080/Server");
+            ServicePointManager.ServerCertificateValidationCallback += (s, cert, chain, sslErrors) => true;
 
-            var binding = new BasicHttpBinding
+            using (var host = new ServiceHost(typeof(ServerInfo)))
             {
-                MessageEncoding = WSMessageEncoding.Mtom,
-                Security = { Mode = BasicHttpSecurityMode.None },
-                MaxReceivedMessageSize = 10_000_000
-            };
-
-            var host = new ServiceHost(typeof(ServerInfo), baseAddress);
-            host.AddServiceEndpoint(typeof(IServerInfo), binding, "");
-            host.Description.Behaviors.Add(new ServiceMetadataBehavior { HttpGetEnabled = true });
-            host.Open();
-
-            Console.WriteLine("Serwer działa pod adresem: " + baseAddress);
-            Console.ReadLine();
+                host.Open();
+                Console.WriteLine("Serwer działa pod adresem: https://localhost:8443/Server");
+                Console.ReadLine();
+            }
         }
     }
 }

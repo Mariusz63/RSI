@@ -59,6 +59,8 @@ ScaffoldingReadMe.txt
 
 # Azure Web Apps
 .vs2019/
+.vs2022/
+
 
 # Visual Studio for Mac
 .vscode/

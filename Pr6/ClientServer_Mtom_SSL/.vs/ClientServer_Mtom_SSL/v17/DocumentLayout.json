@@ -3,32 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|c:\\users\\mariu\\desktop\\rsi\\pr6\\clientserver_mtom_ssl\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|solutionrelative:server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\server\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|solutionrelative:server\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\server\\fileuploadmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|solutionrelative:server\\fileuploadmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E59CB46C-8F5F-4387-93CE-70D459508B2B}|Client\\Client.csproj|C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E59CB46C-8F5F-4387-93CE-70D459508B2B}|Client\\Client.csproj|solutionrelative:client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\server\\iserverinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|solutionrelative:server\\iserverinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E59CB46C-8F5F-4387-93CE-70D459508B2B}|Client\\Client.csproj|C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\client\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{E59CB46C-8F5F-4387-93CE-70D459508B2B}|Client\\Client.csproj|solutionrelative:client\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\server\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|solutionrelative:server\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|c:\\users\\mariu\\desktop\\rsi\\pr6\\clientserver_mtom_ssl\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|solutionrelative:server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E59CB46C-8F5F-4387-93CE-70D459508B2B}|Client\\Client.csproj|C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E59CB46C-8F5F-4387-93CE-70D459508B2B}|Client\\Client.csproj|solutionrelative:client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E59CB46C-8F5F-4387-93CE-70D459508B2B}|Client\\Client.csproj|C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\client\\iserverinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E59CB46C-8F5F-4387-93CE-70D459508B2B}|Client\\Client.csproj|solutionrelative:client\\iserverinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\server\\iserverinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|solutionrelative:server\\iserverinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7E624135-812A-4509-A486-A887F9147331}|Server\\Server.csproj|C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\server\\serverinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,11 +46,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\Client\\Program.cs",
               "RelativeDocumentMoniker": "Client\\Program.cs",
@@ -70,17 +70,18 @@
               "RelativeToolTip": "Server\\FileUploadMessage.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T12:33:03.604Z"
+              "WhenOpened": "2025-04-08T12:33:03.604Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\Server\\Program.cs",
               "RelativeDocumentMoniker": "Server\\Program.cs",
               "ToolTip": "C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\Server\\Program.cs",
               "RelativeToolTip": "Server\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-08T12:31:44.228Z",
               "EditorCaption": ""
@@ -95,11 +96,12 @@
               "RelativeToolTip": "Client\\App.config",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-04-10T12:53:10.202Z"
+              "WhenOpened": "2025-04-10T12:53:10.202Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "IServerInfo.cs",
               "DocumentMoniker": "C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\Client\\IServerInfo.cs",
               "RelativeDocumentMoniker": "Client\\IServerInfo.cs",
@@ -111,19 +113,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "App.config",
               "DocumentMoniker": "C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\Server\\App.config",
               "RelativeDocumentMoniker": "Server\\App.config",
               "ToolTip": "C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\Server\\App.config",
               "RelativeToolTip": "Server\\App.config",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAA8AAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-04-10T12:38:38.085Z"
+              "WhenOpened": "2025-04-10T12:38:38.085Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
               "Title": "IServerInfo.cs",
               "DocumentMoniker": "C:\\Users\\mariu\\Desktop\\RSI\\Pr6\\ClientServer_Mtom_SSL\\Server\\IServerInfo.cs",
               "RelativeDocumentMoniker": "Server\\IServerInfo.cs",
@@ -131,7 +134,8 @@
               "RelativeToolTip": "Server\\IServerInfo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T12:33:02.35Z"
+              "WhenOpened": "2025-04-08T12:33:02.35Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

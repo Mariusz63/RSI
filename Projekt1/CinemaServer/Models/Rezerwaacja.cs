@@ -9,6 +9,7 @@ namespace CinemaServer.Models
     public class Rezerwacja
     {
         public string Id { get; set; }
+        public string UserId { get; set; }
         public string SalaId { get; set; }
         public List<int> NumeryMiejsc { get; set; }
         public string ImieNazwisko { get; set; }

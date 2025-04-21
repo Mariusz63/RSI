@@ -19,7 +19,7 @@ namespace CinemaServer.Service
         #region Dodanie Filmów
         static CinemaReservationService()
         {
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Incepcja.jpg");
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "C:\\Users\\mariu\\Desktop\\RSI\\Projekt1\\CinemaServer\\Resources\\", "Incepcja.jpg");
             var film1 = new Film
             {
                 Id = Guid.NewGuid().ToString(),
@@ -42,7 +42,7 @@ namespace CinemaServer.Service
     }
             };
         
-            path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Matrix.jpg");
+            path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "C:\\Users\\mariu\\Desktop\\RSI\\Projekt1\\CinemaServer\\Resources\\", "Matrix.jpg");
             var film2 = new Film
             {
                 Id = Guid.NewGuid().ToString(),
@@ -65,7 +65,7 @@ namespace CinemaServer.Service
     }
             };
 
-            path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Interstellar.jpg");
+            path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "C:\\Users\\mariu\\Desktop\\RSI\\Projekt1\\CinemaServer\\Resources\\", "Interstellar.jpg");
             var film3 = new Film
             {
                 Id = Guid.NewGuid().ToString(),
@@ -88,7 +88,7 @@ namespace CinemaServer.Service
     }
             };
 
-            path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Pulp Fiction.jpg");
+            path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "C:\\Users\\mariu\\Desktop\\RSI\\Projekt1\\CinemaServer\\Resources\\", "Pulp Fiction.jpg");
             var film4 = new Film
             {
                 Id = Guid.NewGuid().ToString(),
@@ -170,6 +170,7 @@ namespace CinemaServer.Service
             var rezerwacja = new Rezerwacja
             {
                 Id = Guid.NewGuid().ToString(),
+                UserId = uzytkownik.Id,
                 FilmId = filmId,
                 SeansId = seansId,
                 SalaId = seansId,
@@ -213,6 +214,7 @@ namespace CinemaServer.Service
             var rezerwacja = new Rezerwacja
             {
                 Id = Guid.NewGuid().ToString(),
+                UserId = uzytkownik.Id,
                 FilmId = filmId,
                 SeansId = seansId,
                 SalaId = seansId,
@@ -237,7 +239,7 @@ namespace CinemaServer.Service
             var uzytkownik = uzytkownicy.FirstOrDefault(u => u.Id == userId);
             ThrowIfNull(uzytkownik, "Użytkownik niezalogowany.");
 
-            var rezerwacja = rezerwacje.FirstOrDefault(r => r.Id == rezerwacjaId && r.ImieNazwisko == uzytkownik.ImieNazwisko);
+            var rezerwacja = rezerwacje.FirstOrDefault(r => r.Id == rezerwacjaId && r.UserId == userId);
             ThrowIfNull(rezerwacja, "Rezerwacja nie została znaleziona.");
 
             var film = filmy.FirstOrDefault(f => f.Id == rezerwacja.FilmId);
@@ -262,7 +264,7 @@ namespace CinemaServer.Service
             var uzytkownik = uzytkownicy.FirstOrDefault(u => u.Id == userId);
             ThrowIfNull(uzytkownik, "Użytkownik niezalogowany.");
 
-            var rezerwacja = rezerwacje.FirstOrDefault(r => r.Id == rezerwacjaId && r.ImieNazwisko == uzytkownik.ImieNazwisko);
+            var rezerwacja = rezerwacje.FirstOrDefault(r => r.Id == rezerwacjaId && r.UserId == userId);
             ThrowIfNull(rezerwacja, "Rezerwacja nie została znaleziona.");
 
             if (rezerwacja.NumeryMiejsc.Count != 1)
@@ -290,7 +292,7 @@ namespace CinemaServer.Service
             var uzytkownik = uzytkownicy.FirstOrDefault(u => u.Id == userId);
             ThrowIfNull(uzytkownik, "Użytkownik niezalogowany.");
 
-            var rezerwacja = rezerwacje.FirstOrDefault(r => r.Id == rezerwacjaId && r.ImieNazwisko == uzytkownik.ImieNazwisko);
+            var rezerwacja = rezerwacje.FirstOrDefault(r => r.Id == rezerwacjaId && r.UserId == userId);
             ThrowIfNull(rezerwacja, "Rezerwacja nie została znaleziona.");
 
             return rezerwacja;

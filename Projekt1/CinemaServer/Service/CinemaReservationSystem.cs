@@ -126,13 +126,15 @@ namespace CinemaServer.Service
             uzytkownicy.Add(klient);
         }
 
-        private void ThrowIfNull(object obj, string message)
-        {
-            if (obj == null)
-            {
-                throw new FaultException(message);
-            }
-        }
+private void ThrowIfNull(object obj, string message)
+{
+    if (obj == null)
+    {
+        Console.WriteLine("ThrowIfNull triggered: " + message);
+        throw new FaultException(message);
+    }
+}
+
 
         public string Zaloguj(string imieNazwisko)
         {
@@ -190,48 +192,86 @@ namespace CinemaServer.Service
             return $"Rezerwacja potwierdzona, ID: {rezerwacja.Id}";
         }
 
-        public string ZarezerwujWieleMiejsc(string userId, string filmId, string seansId, List<int> miejsca)
+        public string ZarezerwujWieleMiejsc(string userId, string filmId, string seansId, string miejsca)
         {
-            var uzytkownik = uzytkownicy.FirstOrDefault(u => u.Id == userId);
-            ThrowIfNull(uzytkownik, "Użytkownik niezalogowany.");
-
-            var film = filmy.FirstOrDefault(f => f.Id == filmId);
-            ThrowIfNull(film, "Film nie istnieje.");
-
-            var seans = film.Seanse.FirstOrDefault(s => s.Id == seansId);
-            ThrowIfNull(seans, "Seans nie istnieje.");
-
-            foreach (var m in miejsca)
+            try
             {
-                var miejsce = seans.Miejsca.FirstOrDefault(x => x.Numer == m);
-                if (miejsce == null || miejsce.Zajete)
-                    throw new FaultException($"Miejsce {m} jest już zajęte lub nie istnieje.");
+                ConsoleLogger.Log($"Rozpoczynanie rezerwacji grupowej przez użytkownika {userId} dla filmu {filmId} na seansie {seansId}.", ConsoleLogger.LogLevel.Info);
+
+                var uzytkownik = uzytkownicy.FirstOrDefault(u => u.Id == userId);
+                if (uzytkownik == null)
+                {
+                    ConsoleLogger.Log("Użytkownik niezalogowany.", ConsoleLogger.LogLevel.Error);
+                    throw new Exception("Użytkownik niezalogowany.");
+                }
+
+                var film = filmy.FirstOrDefault(f => f.Id == filmId);
+                if (film == null)
+                {
+                    ConsoleLogger.Log("Film nie istnieje.", ConsoleLogger.LogLevel.Error);
+                    throw new Exception("Film nie istnieje.");
+                }
+
+                var seans = film.Seanse.FirstOrDefault(s => s.Id == seansId);
+                if (seans == null)
+                {
+                    ConsoleLogger.Log("Seans nie istnieje.", ConsoleLogger.LogLevel.Error);
+                    throw new Exception("Seans nie istnieje.");
+                }
+
+                ConsoleLogger.Log($"Znaleziono seans: {seans.Data} o godzinie {seans.Godzina}.", ConsoleLogger.LogLevel.Info);
+
+                var miejscaLista = miejsca.Split(',').Select(int.Parse).ToList(); // Przekształcanie ciągu na listę intów
+
+                if (miejscaLista == null || miejscaLista.Count == 0)
+                {
+                    throw new FaultException("Lista miejsc jest pusta.");
+                }
+
+                foreach (var m in miejscaLista)
+                {
+                    var miejsce = seans.Miejsca.FirstOrDefault(x => x.Numer == m);
+                    if (miejsce == null || miejsce.Zajete)
+                    {
+                        ConsoleLogger.Log($"Miejsce {m} jest już zajęte lub nie istnieje.", ConsoleLogger.LogLevel.Warning);
+                        throw new Exception($"Miejsce {m} jest już zajęte lub nie istnieje.");
+                    }
+                }
+
+                foreach (var m in miejscaLista)
+                {
+                    seans.Miejsca.First(x => x.Numer == m).Zajete = true;
+                    ConsoleLogger.Log($"Zarezerwowano miejsce numer {m}.", ConsoleLogger.LogLevel.Info);
+                }
+
+                var rezerwacja = new Rezerwacja
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserId = uzytkownik.Id,
+                    FilmId = filmId,
+                    SeansId = seansId,
+                    SalaId = seansId,
+                    NumeryMiejsc = miejscaLista,
+                    ImieNazwisko = uzytkownik.ImieNazwisko,
+                    DataRezerwacji = DateTime.Now,
+                    TytulFilmu = film.Tytul,
+                    RezyserFilmu = film.Rezyser,
+                    OpisFilmu = film.Opis,
+                    AktorzyFilmu = film.Aktorzy,
+                    ZdjecieFilmu = film.Zdjecie
+                };
+
+                rezerwacja.PotwierdzeniePdf = PdfGenerator.GenerujPotwierdzenie(rezerwacja);
+                rezerwacje.Add(rezerwacja);
+
+                ConsoleLogger.Log($"Rezerwacja zakończona. ID rezerwacji: {rezerwacja.Id}", ConsoleLogger.LogLevel.Info);
+                return $"Zarezerwowano miejsca: {string.Join(", ", miejscaLista)}. ID: {rezerwacja.Id}";
             }
-
-            foreach (var m in miejsca)
-                seans.Miejsca.First(x => x.Numer == m).Zajete = true;
-
-            var rezerwacja = new Rezerwacja
+            catch (Exception ex)
             {
-                Id = Guid.NewGuid().ToString(),
-                UserId = uzytkownik.Id,
-                FilmId = filmId,
-                SeansId = seansId,
-                SalaId = seansId,
-                NumeryMiejsc = miejsca,
-                ImieNazwisko = uzytkownik.ImieNazwisko,
-                DataRezerwacji = DateTime.Now,
-                TytulFilmu = film.Tytul,
-                RezyserFilmu = film.Rezyser,
-                OpisFilmu = film.Opis,
-                AktorzyFilmu = film.Aktorzy,
-                ZdjecieFilmu = film.Zdjecie
-            };
-
-            rezerwacja.PotwierdzeniePdf = PdfGenerator.GenerujPotwierdzenie(rezerwacja);
-            rezerwacje.Add(rezerwacja);
-
-            return $"Zarezerwowano miejsca: {string.Join(", ", miejsca)}. ID: {rezerwacja.Id}";
+                ConsoleLogger.Log($"Błąd: {ex.Message}", ConsoleLogger.LogLevel.Error);
+                return $"Wystąpił błąd: {ex.Message}";
+            }
         }
 
         public bool AnulujRezerwacje(string userId, string rezerwacjaId)

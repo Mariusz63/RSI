@@ -189,11 +189,12 @@ def rezerwuj_wiele(user_id, filmy):
         seans_idx = int(input("\nWybierz numer seansu: ")) - 1
         seans_id = seanse[seans_idx]['Id']
 
+        # Przygotowanie danych do przesłania w formie ciągu
         miejsca_input = input("Podaj numery miejsc oddzielone przecinkami (np. 1,2,3): ")
-        miejsca = [int(m.strip()) for m in miejsca_input.split(",")]
-
-        wynik = client.service.ZarezerwujWieleMiejsc(user_id, film_id, seans_id, miejsca)
+        print(f"Przekazuję miejsca: {miejsca_input}")
+        wynik = client.service.ZarezerwujWieleMiejsc(user_id, film_id, seans_id, miejsca_input)
         print("✅", wynik)
+
     except Fault as fault:
         print("🧨 Błąd SOAP:", fault.message)
     except Exception as e:

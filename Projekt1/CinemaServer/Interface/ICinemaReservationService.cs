@@ -21,7 +21,7 @@ namespace CinemaServer.Interface
         string ZarezerwujMiejsce(string userId, string filmId, string seansId, int numerMiejsca);
 
         [OperationContract]
-        string ZarezerwujWieleMiejsc(string userId, string filmId, string seansId, List<int> miejsca);
+        string ZarezerwujWieleMiejsc(string userId, string filmId, string seansId, string miejsca);
 
         [OperationContract]
         bool AnulujRezerwacje(string userId, string rezerwacjaId);

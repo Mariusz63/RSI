@@ -1,0 +1,6 @@
+2025-04-23 11:49:28 [Info] - Rozpoczynanie rezerwacji grupowej przez użytkownika eb16a313-5961-4129-bd92-150898c44273 dla filmu 38cf0e43-3283-44b9-933b-f3fc322be1d1 na seansie ecc7938e-f35d-469f-82a5-9b9bec1276bc.
+2025-04-23 11:49:28 [Info] - Znaleziono seans: 23.04.2025 00:00:00 o godzinie 18.
+2025-04-23 11:49:28 [Info] - Zarezerwowano miejsce numer 1.
+2025-04-23 11:49:28 [Info] - Zarezerwowano miejsce numer 2.
+2025-04-23 11:49:28 [Info] - Zarezerwowano miejsce numer 3.
+2025-04-23 11:49:29 [Info] - Rezerwacja zakończona. ID rezerwacji: 94c8543c-2e8d-4b07-9b13-d7470a88b331

@@ -81,6 +81,7 @@
     <Compile Include="Service\CinemaReservationSystem.cs" />
     <Compile Include="Service\SoapLoggingBehavior.cs" />
     <Compile Include="Service\SoapLoggingInspector.cs" />
+    <Compile Include="Utils\ConsoleLogger.cs" />
     <Compile Include="Utils\PdfGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +90,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Logs\log.txt" />
     <Content Include="Resources\Incepcja.jpg" />
     <Content Include="Resources\Interstellar.jpg" />
     <Content Include="Resources\Matrix.jpg" />

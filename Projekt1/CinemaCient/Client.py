@@ -20,7 +20,7 @@ settings = Settings(strict=False, xml_huge_tree=True)
 history = HistoryPlugin()
 
 # WSDL endpoint
-wsdl_url = 'https://localhost:8443/Server?wsdl'
+wsdl_url = 'https://192.168.141.232:8443/Server?wsdl'
 client = Client(wsdl=wsdl_url, transport=transport, settings=settings, plugins=[history])
 
 

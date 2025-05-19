@@ -1,0 +1,6 @@
+resources\MessageResource.class
+service\MessageService.class
+service\HelloWorldService.class
+rest\restws1\JakartaRestConfiguration.class
+rest\restws1\resources\JakartaEE10Resource.class
+model\Message.class

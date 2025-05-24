@@ -5,6 +5,7 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +28,7 @@ public class MessageService {
     public List<Message> getAllMessages(){
         return new ArrayList<Message>(messages.values());
     }
-    
-    
+       
     public Message getMessage(Long id){
         return messages.get(id);
     }
@@ -36,6 +36,7 @@ public class MessageService {
    public Message createMessage(Message message) {
         long newId = messages.size() + 1;
         message.setId((int) newId);
+        message.setCreated(new Date());
         messages.put(newId, message);
         return message;
     }

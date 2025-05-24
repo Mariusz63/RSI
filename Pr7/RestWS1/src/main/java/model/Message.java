@@ -5,18 +5,21 @@
 package model;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
 import java.util.Date;
 
 /**
  *
  * @author mariu
  */
-@XmlRootElement
+@XmlRootElement(name = "message")
 public class Message {
     private int id;
     private String message;
     private Date created;
     private String author;
+    
+    public Message() {}
 
     public Message(int par, String hello) {} 
 
@@ -35,6 +38,7 @@ public class Message {
         this.id = id;
     }
 
+    @XmlElement
     public String getMessage() {
         return message;
     }

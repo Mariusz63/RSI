@@ -6,34 +6,34 @@ package rest.restklient;
 
 import datamodel.Produkt;
 import datamodel.ResponseList;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author mariu
  */
 public class RestKlient {
+    public static void main(String[] args) {
+        Sklep sklep = new Sklep();
 
-   public static void main(String[] args) {
-        String URL = "http://localhost:8080/RESTSklep/rest/sklep/allproducts";
+        try {
+            // Przykład kryteriów wyszukiwania
+            Produkt search = new Produkt();
+            search.setName("Laptop"); // można ustawić tylko jedno pole
 
-        Client client = ClientBuilder.newClient();
+            ResponseList result = sklep.searchProdukty(search, ResponseList.class);
 
-        ResponseList response = client
-                .target(URL)
-                .request(MediaType.APPLICATION_JSON)
-                .get(ResponseList.class);
-
-        if (response != null && response.getList() != null) {
-            for (Produkt p : response.getList()) {
-                System.out.println(p);
+            if (result != null && result.getList() != null && !result.getList().isEmpty()) {
+                System.out.println("Znaleziono produkty:");
+                for (Produkt p : result.getList()) {
+                    System.out.println(p);
+                }
+            } else {
+                System.out.println("Nie znaleziono żadnych produktów.");
             }
-        } else {
-            System.out.println("Brak danych lub błąd połączenia.");
+        } catch (Exception e) {
+            System.err.println("Błąd zapytania: " + e.getMessage());
+        } finally {
+            sklep.close();
         }
-
-        client.close();
     }
 }

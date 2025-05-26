@@ -1,0 +1,23 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="produkt" type="produkt"/>
+
+  <xs:element name="responseList" type="responseList"/>
+
+  <xs:complexType name="responseList">
+    <xs:sequence>
+      <xs:element name="list" type="produkt" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="produkt">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"/>
+      <xs:element name="manufacturer" type="xs:string" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="price" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

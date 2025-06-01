@@ -4,7 +4,7 @@
  */
 package resources;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -28,22 +28,11 @@ import service.MessageService;
  *
  * @author mariu
  */
+@Singleton
 @Path("/messages")
 public class MessageResource {
 
     MessageService service = new MessageService();
-
-    @GET
-    @Produces(MediaType.APPLICATION_XML)
-    public List<Message> getText() {
-        return service.getAllMessages();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Message> getMessagesJson() {
-        return service.getAllMessages();
-    }
 
     @GET
     @Path("/{messageId}")
@@ -121,4 +110,49 @@ public class MessageResource {
         return "URL: " + path + "\nUser-Agent: " + agent;
     }
 
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<Message> getMessages(@QueryParam("zaczynasie") String prefix) {
+        List<Message> allMessages = service.getAllMessages();
+
+        if (prefix != null && !prefix.isEmpty()) {
+            return allMessages.stream()
+                    .filter(m -> m.getMessage() != null && m.getMessage().toLowerCase().startsWith(prefix.toLowerCase()))
+                    .toList(); // Java 16+; jeśli masz starszą wersję: .collect(Collectors.toList())
+        }
+
+        return allMessages;
+    }
+    
+     @Path("/{messageId}/comments")
+    public CommentResource getCommentResource() {
+        return new CommentResource();
+    }
+    
+  @GET
+  @Path("/{messageId}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Message getMessage(@PathParam("messageId") long id, @Context UriInfo uriInfo) {
+      Message msg = service.getMessage(id);
+
+      // Utwórz URI do zasobu comments
+      String commentsUri = uriInfo.getBaseUriBuilder()
+          .path(MessageResource.class)
+          .path(MessageResource.class, "getCommentResource")
+          .path(CommentResource.class)
+          .resolveTemplate("messageId", id)
+          .build()
+          .toString();
+
+      // Dodaj link do comments w obiekcie Message (HATEOAS)
+      model.Link commentsLink = new model.Link(); // Użyj swojej klasy model.Link
+      commentsLink.setRel("comments");
+      commentsLink.setHref(commentsUri);
+
+      msg.getLinks().add(commentsLink);
+
+      return msg;
+  }  
 }
+
+

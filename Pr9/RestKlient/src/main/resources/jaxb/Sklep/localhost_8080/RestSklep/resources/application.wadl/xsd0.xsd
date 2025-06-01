@@ -7,7 +7,7 @@
 
   <xs:complexType name="responseList">
     <xs:sequence>
-      <xs:element name="list" type="produkt" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="produkty" type="produkt" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 

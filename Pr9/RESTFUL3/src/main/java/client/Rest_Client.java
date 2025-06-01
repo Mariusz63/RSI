@@ -1,5 +1,9 @@
 package client;
 
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -14,6 +18,7 @@ import java.util.List;
  *
  * @author mariu
  */
+@Path("/messages")
 public class Rest_Client {
 
     private static final String BASE_URL = "http://localhost:8080/RestWS1/webresources/messages";
@@ -29,15 +34,17 @@ public class Rest_Client {
         getAllMessages();
 
         System.out.println("\n=== PUT /messages/5 ===");
-        updateMessage(5);
+       // updateMessage(5);
 
         System.out.println("\n=== DELETE /messages/5 ===");
-        deleteMessage(5);
+       // deleteMessage(5);
 
         System.out.println("\n=== GET /messages?zaczynasie=he ===");
         getMessagesStartingWith("he");
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
     private static void getMessageById(int id) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(BASE_URL + "/" + id);
@@ -57,7 +64,7 @@ public class Rest_Client {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(BASE_URL);
 
-        Message newMessage = new Message(5, "Wiadomość od klienta", "Tadeusz");
+        Message newMessage = new Message(6, "Wiadomość od klienta!", "Tadeusz2");
 
         Response response = target.request(MediaType.APPLICATION_JSON)
                 .post(Entity.json(newMessage));
@@ -66,6 +73,8 @@ public class Rest_Client {
         System.out.println("Body: " + response.readEntity(String.class));
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
     private static void getAllMessages() {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(BASE_URL);
@@ -123,4 +132,7 @@ public class Rest_Client {
         System.out.println("Wiadomości zaczynające się od \"" + prefix + "\":");
         messages.forEach(System.out::println);
     }
+    
+
+
 }

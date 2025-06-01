@@ -22,7 +22,7 @@ public class MessageService {
     public MessageService() {
         messages.put(1L, new Message(1, "Hello", "Jacek"));
         messages.put(2L, new Message(2, "World", "Michał"));
-        messages.put(3L, new Message(2, "World1", "Ola"));
+        messages.put(3L, new Message(3, "World1", "Ola"));
     }
     
     public List<Message> getAllMessages(){
@@ -49,5 +49,15 @@ public class MessageService {
 
     public void removeMessage(long id) {
         messages.remove(id);
+    }
+    
+    public List<Message> getMessagesStartingWith(String prefix) {
+    List<Message> result = new ArrayList<>();
+    for (Message msg : messages.values()) {
+        if (msg.getMessage().toLowerCase().startsWith(prefix.toLowerCase())) {
+            result.add(msg);
+            }
+        }
+    return result;
     }
 }

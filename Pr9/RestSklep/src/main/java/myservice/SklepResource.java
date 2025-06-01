@@ -28,7 +28,7 @@ public class SklepResource {
 
     @GET
     @Path("/allproducts")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_XML)
     public ResponseList getAllProdukty() {
         List<Produkt> lista = produkty.getAllProdukty();
         ResponseList response = new ResponseList();
@@ -38,8 +38,8 @@ public class SklepResource {
     
     @POST
     @Path("/search")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
     public ResponseList searchProducts(Produkt search) {
         List<Produkt> all = produkty.getAllProdukty();
         List<Produkt> result = new ArrayList<>();

@@ -18,7 +18,7 @@ public class RestKlient {
         try {
             // Przykład kryteriów wyszukiwania
             Produkt search = new Produkt();
-            search.setName("Laptop"); // można ustawić tylko jedno pole
+            search.setName("Laptop");
 
             ResponseList result = sklep.searchProdukty(search, ResponseList.class);
 

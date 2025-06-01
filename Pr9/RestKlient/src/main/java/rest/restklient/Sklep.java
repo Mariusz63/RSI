@@ -8,8 +8,10 @@ import datamodel.Produkt;
 import datamodel.ResponseList;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
+import org.glassfish.jersey.jsonb.JsonBindingFeature;
 
 /**
  * Jersey REST client generated for REST resource:SklepResource []<br>
@@ -29,9 +31,12 @@ public class Sklep {
     private final WebTarget baseTarget;
 
     public Sklep() {
-        this.client = ClientBuilder.newClient();
+        this.client = ClientBuilder.newBuilder()
+            .register(JsonBindingFeature.class)
+            .build();
         this.baseTarget = client.target(BASE_URI);
     }
+
 
     public <T> T getAllProdukty(Class<T> responseType) {
         return baseTarget
@@ -44,15 +49,15 @@ public class Sklep {
         client.close();
     }
     
-//    public <T> T searchProdukty(Object searchCriteria, Class<T> responseType) {
-//    return baseTarget
-//            .path("search")
-//            .request(MediaType.APPLICATION_JSON)
-//            .post(responseType);
-//    }
-
-    ResponseList searchProdukty(Produkt search, Class<ResponseList> aClass) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public <T> T searchProdukty(Object searchCriteria, Class<T> responseType) {
+        return baseTarget
+                .path("search")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(searchCriteria, MediaType.APPLICATION_JSON), responseType);
     }
+
+//    ResponseList searchProdukty(Produkt search, Class<ResponseList> aClass) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
 
 }

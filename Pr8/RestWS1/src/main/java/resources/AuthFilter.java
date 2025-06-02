@@ -19,18 +19,33 @@ import java.util.Base64;
  */
 @Provider
 public class AuthFilter implements ContainerRequestFilter {
+
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String authHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+
         if (authHeader != null && authHeader.startsWith("Basic ")) {
             String encodedCredentials = authHeader.substring("Basic ".length());
             String decoded = new String(Base64.getDecoder().decode(encodedCredentials), StandardCharsets.UTF_8);
             String[] parts = decoded.split(":", 2);
-            String username = parts[0];
-            String password = parts[1];
-            System.out.println("Username: " + username + ", Password: " + password);
-        } else {
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+
+            if (parts.length == 2) {
+                String username = parts[0];
+                String password = parts[1];
+
+                // 🔐 Weryfikacja loginu i hasła
+                if ("admin".equals(username) && "admin123".equals(password)) {
+                    return; // użytkownik uwierzytelniony – przepuszczamy dalej
+                }
+            }
         }
+
+        // ❌ Nieautoryzowane – brak nagłówka lub złe dane
+        requestContext.abortWith(
+            Response.status(Response.Status.UNAUTHORIZED)
+                    .header(HttpHeaders.WWW_AUTHENTICATE, "Basic realm=\"Access to REST API\"")
+                    .entity("Unauthorized access – provide valid credentials.")
+                    .build()
+        );
     }
 }

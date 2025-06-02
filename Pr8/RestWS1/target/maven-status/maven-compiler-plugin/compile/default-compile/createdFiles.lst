@@ -1,6 +1,10 @@
+resources\AuthFilter.class
+model\Link.class
 resources\MessageResource.class
+resources\MyResponseFilter.class
 service\MessageService.class
 service\HelloWorldService.class
+resources\CommentResource.class
 rest\restws1\JakartaRestConfiguration.class
 rest\restws1\resources\JakartaEE10Resource.class
 model\Message.class

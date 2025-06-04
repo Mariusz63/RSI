@@ -8,6 +8,9 @@ namespace CinemaReservationAPI.Controllers
     [Route("movies")]
     public class MoviesController : ControllerBase
     {
+        public byte[] Image { get; set; }
+        public string ImageBase64 => Convert.ToBase64String(Image);
+
         private static List<Movie> _movies = SampleData.GetMovies();
 
         [HttpGet]
@@ -39,6 +42,7 @@ namespace CinemaReservationAPI.Controllers
                 movie.Director,
                 movie.Actors,
                 movie.Description,
+                ImageBase64 = movie.Image,
                 Showtimes = movie.Showtimes.Select(s => new {
                     s.Id,
                     Day = s.Time.ToString("yyyy-MM-dd"),
@@ -51,6 +55,16 @@ namespace CinemaReservationAPI.Controllers
             };
 
             return Ok(result);
+        }
+
+        [HttpGet("{id}/image")]
+        public IActionResult GetMovieImage(int id)
+        {
+            var movie = _movies.FirstOrDefault(m => m.Id == id);
+            if (movie == null || movie.Image == null || movie.Image.Length == 0)
+                return NotFound("Brak obrazu.");
+
+            return File(movie.Image, "image/jpeg");
         }
 
     }

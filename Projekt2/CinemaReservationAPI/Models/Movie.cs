@@ -10,5 +10,4 @@
         public byte[] Image { get; set; } // MTOM or base64
         public List<Showtime> Showtimes { get; set; }
     }
-
 }

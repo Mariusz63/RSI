@@ -10,13 +10,13 @@ namespace CinemaReservationAPI.Data
         public static List<Movie> GetMovies()
         {
             return new List<Movie> {
-                new Movie {
+               new Movie {
                     Id = 1,
                     Title = "Inception",
                     Director = "Christopher Nolan",
                     Actors = new List<string> { "Leonardo DiCaprio", "Joseph Gordon-Levitt" },
                     Description = "Mind-bending sci-fi thriller",
-                    Image = new byte[0], // Leave empty for now
+                    Image = LoadImage("Incepcja.jpg"),
                     Showtimes = new List<Showtime> {
                         new Showtime {
                             Id = 1,
@@ -31,7 +31,7 @@ namespace CinemaReservationAPI.Data
                     Director = "The Wachowskis",
                     Actors = new List<string> { "Keanu Reeves", "Carrie-Anne Moss" },
                     Description = "Cyberpunk classic",
-                    Image = new byte[0],
+                    Image = LoadImage("Matrix.jpg"),
                     Showtimes = new List<Showtime> {
                         new Showtime {
                             Id = 2,
@@ -46,7 +46,7 @@ namespace CinemaReservationAPI.Data
                     Director = "Christopher Nolan",
                     Actors = new List<string> { "Matthew McConaughey", "Anne Hathaway" },
                     Description = "Epic science fiction adventure",
-                    Image = new byte[0],
+                    Image = LoadImage("Interstellar.jpg"),
                     Showtimes = new List<Showtime> {
                         new Showtime {
                             Id = 3,
@@ -56,6 +56,12 @@ namespace CinemaReservationAPI.Data
                     }
                 }
             };
+        }
+
+        private static byte[] LoadImage(string filename)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "Images", filename);
+            return File.Exists(path) ? File.ReadAllBytes(path) : new byte[0];
         }
     }
 }

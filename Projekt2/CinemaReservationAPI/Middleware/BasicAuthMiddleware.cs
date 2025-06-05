@@ -1,5 +1,10 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using CinemaReservationAPI.Data; 
+using System.Linq;
 
 namespace CinemaReservationAPI.Middleware
 {
@@ -14,8 +19,6 @@ namespace CinemaReservationAPI.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            Console.WriteLine("Authorization header: " + context.Request.Headers["Authorization"].ToString());
-
             if (!context.Request.Headers.ContainsKey("Authorization"))
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
@@ -24,9 +27,7 @@ namespace CinemaReservationAPI.Middleware
                 return;
             }
 
-
             var authHeader = context.Request.Headers["Authorization"].ToString();
-            System.Diagnostics.Debug.WriteLine("Authorization header: " + authHeader);
             if (!authHeader.StartsWith("Basic ", StringComparison.OrdinalIgnoreCase))
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
@@ -35,14 +36,14 @@ namespace CinemaReservationAPI.Middleware
             }
 
             var encodedCredentials = authHeader.Substring("Basic ".Length).Trim();
-            string username;
-            string password;
+
+            string username, password;
 
             try
             {
                 var decodedBytes = Convert.FromBase64String(encodedCredentials);
                 var decodedString = Encoding.UTF8.GetString(decodedBytes);
-                var credentials = decodedString.Split(':', 2); // split na 2 części, by uniknąć problemów z dwukropkami w haśle
+                var credentials = decodedString.Split(':', 2);
 
                 if (credentials.Length != 2)
                 {
@@ -61,14 +62,9 @@ namespace CinemaReservationAPI.Middleware
                 return;
             }
 
-            // Przykładowi użytkownicy - w prawdziwej aplikacji sprawdzać w bazie lub innym repozytorium
-            var validUsers = new Dictionary<string, string>
-            {
-                { "admin", "admin123" },
-                { "john", "doe123" }
-            };
-
-            if (!validUsers.TryGetValue(username, out var validPassword) || validPassword != password)
+            // Sprawdź użytkownika w DataStore
+            var user = SampleUsers.Users.FirstOrDefault(u => u.Name == username && u.Password == password);
+            if (user == null)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 await context.Response.WriteAsync("Błędny login lub hasło");

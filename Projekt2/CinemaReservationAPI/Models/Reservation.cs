@@ -1,4 +1,6 @@
-﻿namespace CinemaReservationAPI.Models
+﻿using System.Text.Json.Serialization;
+
+namespace CinemaReservationAPI.Models
 {
     public class Reservation
     {
@@ -6,7 +8,8 @@
         public int MovieId { get; set; }
         public int ShowtimeId { get; set; }
         public List<int> SeatNumbers { get; set; }
-        public string UserId { get; set; }
+        [JsonIgnore]
+        public string? UserName { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 

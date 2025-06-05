@@ -8,15 +8,10 @@ namespace CinemaReservationAPI.Controllers
     [Route("movies")]
     public class MoviesController : ControllerBase
     {
-        public byte[] Image { get; set; }
-        public string ImageBase64 => Convert.ToBase64String(Image);
-
-        private static List<Movie> _movies = SampleData.GetMovies();
-
         [HttpGet]
         public IActionResult GetAllMovies()
         {
-            var result = _movies.Select(m => new {
+            var result = DataStore.Movies.Select(m => new {
                 m.Id,
                 m.Title,
                 Showtimes = m.Showtimes.Select(s => new {
@@ -32,7 +27,7 @@ namespace CinemaReservationAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult GetMovieDetailsById(int id)
         {
-            var movie = _movies.FirstOrDefault(m => m.Id == id);
+            var movie = DataStore.Movies.FirstOrDefault(m => m.Id == id);
             if (movie == null) return NotFound();
 
             var result = new
@@ -60,7 +55,7 @@ namespace CinemaReservationAPI.Controllers
         [HttpGet("{id}/image")]
         public IActionResult GetMovieImage(int id)
         {
-            var movie = _movies.FirstOrDefault(m => m.Id == id);
+            var movie = DataStore.Movies.FirstOrDefault(m => m.Id == id);
             if (movie == null || movie.Image == null || movie.Image.Length == 0)
                 return NotFound("Brak obrazu.");
 

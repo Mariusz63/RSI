@@ -263,11 +263,14 @@ class App:
                 # tk.Label(details_win, text=f"ID: {details.get('id')}").pack()
 
                 # Pokaż pozostałe dane
-                tk.Label(details_win, text=f"Film ID: {details.get('movieId')}").pack()
-                tk.Label(details_win, text=f"Seans ID: {details.get('showtimeId')}").pack()
-                tk.Label(details_win, text=f"Miejsca: {', '.join(map(str, details.get('seatNumbers', [])))}").pack()
-                tk.Label(details_win, text=f"Użytkownik: {details.get('userName')}").pack()
-                tk.Label(details_win, text=f"Data rezerwacji: {details.get('createdAt')}").pack()
+                if movie:
+                        tk.Label(details_win, text=f"Tytuł: {movie.get('title', 'brak')}").pack()
+                        tk.Label(details_win, text=f"Reżyser: {movie.get('director', 'brak')}").pack()
+                        tk.Label(details_win, text=f"Aktorzy: {', '.join(movie.get('actors', []))}").pack()
+                        tk.Label(details_win, text="Opis:").pack()
+                        tk.Label(details_win, text=movie.get('description', ''), wraplength=400, justify='left').pack(pady=(0, 10))
+                else:
+                        tk.Label(details_win, text=f"Film ID: {details.get('movieId')} (brak szczegółów)").pack()
 
                 # Wyświetl zdjęcie filmu, jeśli jest
                 if movie and movie.get('imageBase64'):
@@ -302,8 +305,11 @@ class App:
                         command=lambda: self.delete_reservation_by_id(res_id, details_win)).pack(side=tk.LEFT, padx=10)
                 tk.Button(btn_frame, text="Pobierz jako PDF",
                         command=lambda: self.download_reservation_pdf(res_id)).pack(side=tk.LEFT, padx=10)
+                tk.Button(btn_frame, text="Edytuj miejsca",
+                        command=lambda: self.edit_reservation_seats(details, details_win)).pack(side=tk.LEFT, padx=10)
                 tk.Button(btn_frame, text="Powrót do listy",
                         command=details_win.destroy).pack(side=tk.LEFT, padx=10)
+                
 
             elif res.status_code == 404:
                 messagebox.showerror("Błąd", "Rezerwacja nie znaleziona.")
@@ -311,6 +317,65 @@ class App:
                 messagebox.showerror("Błąd", f"Błąd pobierania danych: {res.status_code}")
         except Exception as e:
             messagebox.showerror("Błąd", f"Błąd połączenia:\n{e}")
+
+    def edit_reservation_seats(self, reservation_details, parent_window):
+        edit_win = tk.Toplevel(self.root)
+        edit_win.title(f"Edytuj miejsca rezerwacji {reservation_details.get('id')}")
+
+        movie_id = reservation_details.get('movieId')
+        showtime_id = reservation_details.get('showtimeId')
+
+        # Pobierz dane filmu i seansu (zakładam, że masz metodę pobierania filmu i showtime)
+        movie_res = requests.get(f"{API_BASE}/movies/{movie_id}", auth=self.auth, verify=False)
+        if movie_res.status_code != 200:
+            messagebox.showerror("Błąd", "Nie udało się pobrać danych filmu.")
+            edit_win.destroy()
+            return
+        movie = movie_res.json()
+
+        showtime = next((s for s in movie.get('showtimes', []) if s['id'] == showtime_id), None)
+        if not showtime:
+            messagebox.showerror("Błąd", "Nie znaleziono seansu.")
+            edit_win.destroy()
+            return
+
+        seats = showtime.get('seats', [])
+        current_seats = set(reservation_details.get('seatNumbers', []))
+
+        tk.Label(edit_win, text="Zaznacz miejsca do rezerwacji:").pack(pady=5)
+
+        seat_vars = {}
+        for seat in seats:
+            var = tk.IntVar(value=1 if seat['number'] in current_seats else 0)
+            state = 'disabled' if seat['isReserved'] and seat['number'] not in current_seats else 'normal'
+            cb = tk.Checkbutton(edit_win, text=f"Miejsce {seat['number']}{' (zajęte)' if seat['isReserved'] and seat['number'] not in current_seats else ''}",
+                                variable=var, state=state)
+            cb.pack(anchor='w')
+            seat_vars[seat['number']] = var
+
+        def confirm_edit():
+            selected_seats = [num for num, var in seat_vars.items() if var.get() == 1]
+            if not selected_seats:
+                messagebox.showwarning("Uwaga", "Musisz wybrać przynajmniej jedno miejsce.")
+                return
+
+            try:
+                res = requests.put(f"{API_BASE}/reservations/{reservation_details.get('id')}",
+                                json=selected_seats, auth=self.auth, verify=False)
+                if res.status_code == 200:
+                    messagebox.showinfo("Sukces", "Rezerwacja została zaktualizowana.")
+                    edit_win.destroy()
+                    parent_window.destroy()
+                    self.show_my_reservations()
+                elif res.status_code == 409:
+                    messagebox.showerror("Błąd", "Niektóre miejsca są już zajęte.")
+                else:
+                    messagebox.showerror("Błąd", f"Błąd aktualizacji: {res.status_code}\n{res.text}")
+            except Exception as e:
+                messagebox.showerror("Błąd", f"Błąd połączenia:\n{e}")
+
+        tk.Button(edit_win, text="Zapisz zmiany", command=confirm_edit).pack(pady=10)
+
 
     def delete_reservation_by_id(self, res_id, window_to_close=None):
         confirm = messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz usunąć tę rezerwację?")

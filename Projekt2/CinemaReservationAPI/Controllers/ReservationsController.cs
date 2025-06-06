@@ -12,26 +12,53 @@ namespace CinemaReservationAPI.Controllers
     {
         private string GetCurrentUserName()
         {
-            // Pobierz nazwę użytkownika z HttpContext.Items (ustawioną przez BasicAuthMiddleware)
             return HttpContext.Items["User"]?.ToString() ?? "anonymous";
         }
 
         [HttpGet]
         public IActionResult GetUserReservations()
         {
+            Console.WriteLine("GET /reservations");
+
             var username = GetCurrentUserName();
-            var userReservations = DataStore.Reservations.Where(r => r.UserName == username).ToList();
-            return Ok(userReservations);
+            var userReservations = DataStore.Reservations
+                .Where(r => r.UserName == username)
+                .Select(r => new
+                {
+                    r.Id,
+                    r.MovieId,
+                    r.ShowtimeId,
+                    r.SeatNumbers,
+                    r.CreatedAt,
+                    _links = new
+                    {
+                        self = Url.Action(nameof(GetReservation), new { id = r.Id }),
+                        details = Url.Action(nameof(GetReservationDetails), new { id = r.Id }),
+                        pdf = Url.Action(nameof(GetReservationPdf), new { id = r.Id }),
+                        cancel = Url.Action(nameof(DeleteReservation), new { id = r.Id })
+                    }
+                })
+                .ToList();
+
+            return Ok(new
+            {
+                Reservations = userReservations,
+                _links = new
+                {
+                    self = Url.Action(nameof(GetUserReservations)),
+                    create = Url.Action(nameof(CreateReservation))
+                }
+            });
         }
 
         [HttpPost]
         public IActionResult CreateReservation([FromBody] Reservation request)
         {
-            // Jeśli klient spróbuje przesłać UserName – odrzucamy
+            Console.WriteLine("POST /reservations");
+            Console.WriteLine($"Request body: {System.Text.Json.JsonSerializer.Serialize(request)}");
+
             if (!string.IsNullOrWhiteSpace(request.UserName))
-            {
                 return BadRequest("Pole 'UserName' nie powinno być ustawiane przez klienta.");
-            }
 
             var movie = DataStore.Movies.FirstOrDefault(m => m.Id == request.MovieId);
             if (movie == null)
@@ -41,25 +68,24 @@ namespace CinemaReservationAPI.Controllers
             if (showtime == null)
                 return NotFound("Seans nie znaleziony.");
 
+            if (request.SeatNumbers == null || !request.SeatNumbers.Any())
+                return BadRequest("Musisz wybrać przynajmniej jedno miejsce.");
+
             foreach (var seatNumber in request.SeatNumbers)
             {
                 var seat = showtime.Seats.FirstOrDefault(s => s.Number == seatNumber);
-                if (request.SeatNumbers == null || !request.SeatNumbers.Any())
-                    return BadRequest("Musisz wybrać przynajmniej jedno miejsce.");
+                if (seat == null)
+                    return BadRequest($"Miejsce {seatNumber} nie istnieje.");
                 if (seat.IsReserved)
                     return Conflict($"Miejsce {seatNumber} jest już zarezerwowane.");
             }
 
             foreach (var seatNumber in request.SeatNumbers)
-            {
-                var seat = showtime.Seats.First(s => s.Number == seatNumber);
-                seat.IsReserved = true;
-            }
+                showtime.Seats.First(s => s.Number == seatNumber).IsReserved = true;
 
             request.Id = Guid.NewGuid();
-            request.UserName = GetCurrentUserName(); // przypisujemy poprawnie
+            request.UserName = GetCurrentUserName();
             request.CreatedAt = DateTime.UtcNow;
-
             DataStore.Reservations.Add(request);
 
             return CreatedAtAction(nameof(GetReservation), new { id = request.Id }, new
@@ -68,25 +94,46 @@ namespace CinemaReservationAPI.Controllers
                 Status = "confirmed",
                 _links = new
                 {
+                    self = Url.Action(nameof(GetReservation), new { id = request.Id }),
+                    details = Url.Action(nameof(GetReservationDetails), new { id = request.Id }),
                     pdf = Url.Action(nameof(GetReservationPdf), new { id = request.Id }),
                     cancel = Url.Action(nameof(DeleteReservation), new { id = request.Id })
                 }
             });
         }
 
-
         [HttpGet("{id}")]
         public IActionResult GetReservation(Guid id)
         {
+            Console.WriteLine($"GET /reservations/{id}");
+
             var username = GetCurrentUserName();
             var res = DataStore.Reservations.FirstOrDefault(r => r.Id == id && r.UserName == username);
             if (res == null) return NotFound();
-            return Ok(res);
+
+            return Ok(new
+            {
+                res.Id,
+                res.MovieId,
+                res.ShowtimeId,
+                res.SeatNumbers,
+                res.CreatedAt,
+                _links = new
+                {
+                    self = Url.Action(nameof(GetReservation), new { id = res.Id }),
+                    details = Url.Action(nameof(GetReservationDetails), new { id = res.Id }),
+                    pdf = Url.Action(nameof(GetReservationPdf), new { id = res.Id }),
+                    update = Url.Action(nameof(UpdateReservation), new { id = res.Id }),
+                    cancel = Url.Action(nameof(DeleteReservation), new { id = res.Id })
+                }
+            });
         }
 
         [HttpGet("{id}/Details")]
         public IActionResult GetReservationDetails(Guid id)
         {
+            Console.WriteLine($"GET /reservations/{id}/Details");
+
             var username = GetCurrentUserName();
             var reservation = DataStore.Reservations.FirstOrDefault(r => r.Id == id && r.UserName == username);
             if (reservation == null) return NotFound();
@@ -108,6 +155,14 @@ namespace CinemaReservationAPI.Controllers
                     Actors = movie.Actors,
                     movie.Description,
                     ImageBase64 = movie.Image != null ? Convert.ToBase64String(movie.Image) : null
+                },
+                _links = new
+                {
+                    self = Url.Action(nameof(GetReservationDetails), new { id = reservation.Id }),
+                    reservation = Url.Action(nameof(GetReservation), new { id = reservation.Id }),
+                    pdf = Url.Action(nameof(GetReservationPdf), new { id = reservation.Id }),
+                    update = Url.Action(nameof(UpdateReservation), new { id = reservation.Id }),
+                    cancel = Url.Action(nameof(DeleteReservation), new { id = reservation.Id })
                 }
             });
         }
@@ -115,32 +170,44 @@ namespace CinemaReservationAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteReservation(Guid id)
         {
+            Console.WriteLine($"DELETE /reservations/{id}");
+
             var username = GetCurrentUserName();
             var res = DataStore.Reservations.FirstOrDefault(r => r.Id == id && r.UserName == username);
             if (res == null) return NotFound();
 
             var movie = DataStore.Movies.FirstOrDefault(m => m.Id == res.MovieId);
-            if (movie != null)
+            var showtime = movie?.Showtimes.FirstOrDefault(s => s.Id == res.ShowtimeId);
+
+            if (showtime != null)
             {
-                var showtime = movie.Showtimes.FirstOrDefault(s => s.Id == res.ShowtimeId);
-                if (showtime != null)
+                foreach (var seatNumber in res.SeatNumbers)
                 {
-                    foreach (var seatNumber in res.SeatNumbers)
-                    {
-                        var seat = showtime.Seats.FirstOrDefault(s => s.Number == seatNumber);
-                        if (seat != null)
-                            seat.IsReserved = false;
-                    }
+                    var seat = showtime.Seats.FirstOrDefault(s => s.Number == seatNumber);
+                    if (seat != null)
+                        seat.IsReserved = false;
                 }
             }
 
             DataStore.Reservations.Remove(res);
-            return NoContent();
+
+            return Ok(new
+            {
+                Status = "deleted",
+                _links = new
+                {
+                    self = Url.Action(nameof(GetUserReservations)),
+                    create = Url.Action(nameof(CreateReservation))
+                }
+            });
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateReservation(Guid id, [FromBody] List<int> newSeatNumbers)
         {
+            Console.WriteLine($"PUT /reservations/{id}");
+            Console.WriteLine($"Request body: {System.Text.Json.JsonSerializer.Serialize(newSeatNumbers)}");
+
             var username = GetCurrentUserName();
             var reservation = DataStore.Reservations.FirstOrDefault(r => r.Id == id && r.UserName == username);
             if (reservation == null)
@@ -150,22 +217,16 @@ namespace CinemaReservationAPI.Controllers
                 return BadRequest("Musisz wybrać przynajmniej jedno miejsce.");
 
             var movie = DataStore.Movies.FirstOrDefault(m => m.Id == reservation.MovieId);
-            if (movie == null)
-                return NotFound("Film nie znaleziony.");
-
-            var showtime = movie.Showtimes.FirstOrDefault(s => s.Id == reservation.ShowtimeId);
+            var showtime = movie?.Showtimes.FirstOrDefault(s => s.Id == reservation.ShowtimeId);
             if (showtime == null)
                 return NotFound("Seans nie znaleziony.");
 
-            // Zwolnij stare miejsca
             foreach (var oldSeatNumber in reservation.SeatNumbers)
             {
                 var seat = showtime.Seats.FirstOrDefault(s => s.Number == oldSeatNumber);
-                if (seat != null)
-                    seat.IsReserved = false;
+                if (seat != null) seat.IsReserved = false;
             }
 
-            // Sprawdź czy nowe miejsca są dostępne
             foreach (var newSeatNumber in newSeatNumbers)
             {
                 var seat = showtime.Seats.FirstOrDefault(s => s.Number == newSeatNumber);
@@ -175,15 +236,11 @@ namespace CinemaReservationAPI.Controllers
                     return Conflict($"Miejsce {newSeatNumber} jest już zarezerwowane.");
             }
 
-            // Zarezerwuj nowe miejsca
             foreach (var newSeatNumber in newSeatNumbers)
-            {
-                var seat = showtime.Seats.First(s => s.Number == newSeatNumber);
-                seat.IsReserved = true;
-            }
+                showtime.Seats.First(s => s.Number == newSeatNumber).IsReserved = true;
 
-            // Zaktualizuj rezerwację
             reservation.SeatNumbers = newSeatNumbers;
+
             return Ok(new
             {
                 reservation.Id,
@@ -192,6 +249,7 @@ namespace CinemaReservationAPI.Controllers
                 _links = new
                 {
                     self = Url.Action(nameof(GetReservation), new { id = reservation.Id }),
+                    details = Url.Action(nameof(GetReservationDetails), new { id = reservation.Id }),
                     pdf = Url.Action(nameof(GetReservationPdf), new { id = reservation.Id }),
                     cancel = Url.Action(nameof(DeleteReservation), new { id = reservation.Id })
                 }
@@ -201,6 +259,8 @@ namespace CinemaReservationAPI.Controllers
         [HttpGet("{id}/pdf")]
         public IActionResult GetReservationPdf(Guid id)
         {
+            Console.WriteLine($"GET /reservations/{id}/pdf");
+
             var username = GetCurrentUserName();
             var reservation = DataStore.Reservations.FirstOrDefault(r => r.Id == id && r.UserName == username);
             if (reservation == null) return NotFound();
@@ -223,23 +283,18 @@ namespace CinemaReservationAPI.Controllers
                     gfx.DrawString("Actors:", font, XBrushes.Black, new XPoint(40, y)); y += 20;
                     foreach (var actor in movie.Actors)
                     {
-                        gfx.DrawString($"- {actor}", font, XBrushes.Black, new XPoint(60, y));
-                        y += 20;
+                        gfx.DrawString($"- {actor}", font, XBrushes.Black, new XPoint(60, y)); y += 20;
                     }
                     gfx.DrawString("Description:", font, XBrushes.Black, new XPoint(40, y)); y += 20;
-
-                    // Łamanie tekstu opisu, jeśli jest długi
                     var desc = movie.Description ?? "";
                     var maxWidth = page.Width - 80;
                     var descLines = SplitTextIntoLines(desc, gfx, font, maxWidth);
                     foreach (var line in descLines)
                     {
-                        gfx.DrawString(line, font, XBrushes.Black, new XPoint(40, y));
-                        y += 20;
+                        gfx.DrawString(line, font, XBrushes.Black, new XPoint(40, y)); y += 20;
                     }
                     y += 10;
 
-                    // Dodaj obrazek jeśli jest
                     if (movie.Image != null && movie.Image.Length > 0)
                     {
                         try
@@ -269,7 +324,6 @@ namespace CinemaReservationAPI.Controllers
             }
         }
 
-        // Pomocnicza metoda do łamania tekstu na linie pod max szerokość
         private List<string> SplitTextIntoLines(string text, XGraphics gfx, XFont font, double maxWidth)
         {
             var lines = new List<string>();
@@ -303,8 +357,5 @@ namespace CinemaReservationAPI.Controllers
 
             return lines;
         }
-
-
-
     }
 }

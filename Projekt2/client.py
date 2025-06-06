@@ -8,7 +8,7 @@ import base64
 import cv2
 from PIL import Image, ImageTk
 
-API_BASE = "https://localhost:44314"
+API_BASE = "https://192.168.117.232:7267"
 
 class App:
     def __init__(self, root):
@@ -44,8 +44,12 @@ class App:
                 res = requests.get(f"{API_BASE}/movies", auth=self.auth, verify=False)
                 if res.status_code == 200:
                     self.movies = res.json()
+                    print("Zalogowano pomyślnie. Filmy pobrane:")
+                    for m in self.movies:
+                        print(f"- {m['title']}")
                     login_win.destroy()
                     self.show_movies_list()
+
                 else:
                     messagebox.showerror("Błąd", "Błędne dane logowania.")
             except Exception as e:
@@ -167,7 +171,10 @@ class App:
 
         def confirm_reservation():
             selected_seats = [int(num) for num, var in seat_vars.items() if var.get() == 1]
+            print("Zaznaczone miejsca:", selected_seats)
+            
             if not selected_seats:
+                print("Brak zaznaczonych miejsc.")
                 messagebox.showwarning("Uwaga", "Wybierz przynajmniej jedno miejsce.")
                 return
 
@@ -176,6 +183,10 @@ class App:
                 "showtimeId": showtime['id'],
                 "seatNumbers": selected_seats
             }
+
+            print("Wysyłam żądanie POST do /reservations z danymi:")
+            print(reservation_data)
+
 
             import json
             print("Wysyłam rezerwację JSON:", json.dumps(reservation_data, indent=2))

@@ -6,7 +6,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5158"
+      "applicationUrl": "http://192.168.117.232:5158"
     },
     "https": {
       "commandName": "Project",
@@ -14,7 +14,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7267;http://localhost:5158"
+      "applicationUrl": "https://192.168.117.232:7267;http://192.168.117.232:5158"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -22,7 +22,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:44314"
+      "applicationUrl": "https://192.168.117.232:44314"
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json",

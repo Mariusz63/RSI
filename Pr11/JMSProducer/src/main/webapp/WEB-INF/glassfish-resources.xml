@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <!-- Connection Factory -->
+    <connector-connection-pool name="jms/myQueueFactoryPool"
+                                connection-definition-name="jakarta.jms.ConnectionFactory"
+                                resource-adapter-name="jmsra">
+        <property name="ClientId" value="JMSProducerApp"/>
+    </connector-connection-pool>
+
+    <connector-resource jndi-name="jms/myQueueFactory"
+                        pool-name="jms/myQueueFactoryPool"
+                        enabled="true"/>
+
+    <!-- Queue Destination (poprawione!) -->
+    <admin-object-resource enabled="true"
+                           jndi-name="jms/myQueue"
+                           res-type="jakarta.jms.Queue"
+                           class-name="com.sun.messaging.Queue"
+                           res-adapter="jmsra"/>
+</resources>
